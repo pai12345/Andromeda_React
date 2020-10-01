@@ -1,17 +1,17 @@
 import React, { Fragment, lazy, Suspense } from "react";
 import "./App.css";
-import { XgBusyIndicator } from "./components/Reusable";
+import { XgBusyIndicator } from "./components/Reusable/Reusable";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 
 const XgSideNav = lazy(() =>
-  import("./components/Reusable").then((module) => ({
+  import("./components/Reusable/Reusable").then((module) => ({
     default: module.XgSideNav,
   }))
 );
 
-const DevOps = lazy(() => import("./components/DevOps"));
-const SurveyPage = lazy(() => import("./components/Survey"));
+const DevOps = lazy(() => import("./components/DevOps/DevOps"));
+const SurveyPage = lazy(() => import("./components/Survey/Survey"));
 
 const Switch = lazy(() =>
   import("react-router-dom").then((module) => ({
@@ -32,21 +32,21 @@ const Redirect = lazy(() =>
 );
 
 const SignUp = lazy(() =>
-  import("./components/LoginPage").then((module) => ({
+  import("./components/LoginPage/LoginPage").then((module) => ({
     default: module.SignUp,
   }))
 );
 
 const LoginPageDialog = lazy(() =>
-  import("./components/LoginPage").then((module) => ({
+  import("./components/LoginPage/LoginPage").then((module) => ({
     default: module.LoginPageDialog,
   }))
 );
 
-const XgMainPage = lazy(() => import("./components/MainPage"));
+const XgMainPage = lazy(() => import("./components/MainPage/MainPage"));
 
 const XgNotFoundPage = lazy(() =>
-  import("./components/Reusable").then((module) => ({
+  import("./components/Reusable/Reusable").then((module) => ({
     default: module.XgNotFoundPage,
   }))
 );

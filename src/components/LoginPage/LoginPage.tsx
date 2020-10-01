@@ -13,46 +13,46 @@ import {
   NullishCoalesce,
   LoginPage_Authenticationresult_Interface,
   POSTCALL_Interface,
-} from "../utility/Util";
+} from "../../utility/Util";
 import { LayoutPanel as Panel } from "fundamental-react/lib/LayoutPanel";
-import { POSTCALL } from "../service/service";
+import { POSTCALL } from "../../service/service";
 
 import {
   SignUp_LoginBody_Interface,
   Error_Customer_enum,
   LoginPage_LoginBody_Interface,
-} from "../utility/Interface";
-import generateFunctions from "../utility/Functions";
+} from "../../utility/Interface";
+import generateFunctions from "../../utility/Functions";
 import { useDispatch } from "react-redux";
-import { authenticate_reducer } from "../store/slices/single/login";
-import generateState from "../utility/State";
+import { authenticate_reducer } from "../../store/slices/single/login";
+import generateState from "../../utility/State";
 
 const XgBusyIndicator = lazy(() =>
-  import("./Reusable").then((module) => ({
+  import("../Reusable/Reusable").then((module) => ({
     default: module.XgBusyIndicator,
   }))
 );
 
 const XgFormLabelInput = lazy(() =>
-  import("./Reusable").then((module) => ({
+  import("../Reusable/Reusable").then((module) => ({
     default: module.XgFormLabelInput,
   }))
 );
 
 const XgFormLabelCombobox = lazy(() =>
-  import("./Reusable").then((module) => ({
+  import("../Reusable/Reusable").then((module) => ({
     default: module.XgFormLabelCombobox,
   }))
 );
 
 const XgFormButton = lazy(() =>
-  import("./Reusable").then((module) => ({
+  import("../Reusable/Reusable").then((module) => ({
     default: module.XgFormButton,
   }))
 );
 
 const XgMessageToast = lazy(() =>
-  import("./Reusable").then((module) => ({
+  import("../Reusable/Reusable").then((module) => ({
     default: module.XgMessageToast,
   }))
 );

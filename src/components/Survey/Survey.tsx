@@ -1,10 +1,10 @@
 import React, { Fragment, memo, Suspense, lazy, useState } from "react";
-import { XgBusyIndicator } from "./Reusable";
-import generateState from "../utility/State";
+import { XgBusyIndicator } from "../Reusable/Reusable";
+import generateState from "../../utility/State";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const XgTile = lazy(() =>
-  import("./Reusable").then((module) => ({
+  import("../Reusable/Reusable").then((module) => ({
     default: module.XgTile,
   }))
 );

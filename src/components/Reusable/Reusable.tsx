@@ -20,7 +20,7 @@ import {
   Appbar_MenuBar_Interface,
   AppBar_HeaderIcon_Interface,
   XgTile_Interface,
-} from "../utility/Util";
+} from "../../utility/Util";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -33,13 +33,13 @@ import {
   XgFormLabelInput_Interface,
   XgFormButton_Interface,
   XgFormLabelCombobox_Interface,
-} from "../utility/Interface";
+} from "../../utility/Interface";
 import { useSelector, useDispatch } from "react-redux";
-import generateSelectors from "../store/selectors/root";
-import { authenticate_reducer } from "../store/slices/single/login";
-import { selectmode_reducer } from "../store/slices/single/main";
-import generateFunctions from "../utility/Functions";
-import generateState from "../utility/State";
+import generateSelectors from "../../store/selectors/root";
+import { authenticate_reducer } from "../../store/slices/single/login";
+import { selectmode_reducer } from "../../store/slices/single/main";
+import generateFunctions from "../../utility/Functions";
+import generateState from "../../utility/State";
 
 const AppBar = lazy(() => import("@material-ui/core/AppBar"));
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
@@ -65,17 +65,17 @@ const MenuIcon = lazy(() => import("@material-ui/icons/Menu"));
 const Toolbar = lazy(() => import("@material-ui/core/Toolbar"));
 const IconButton = lazy(() => import("@material-ui/core/IconButton"));
 
-const AssignmentTurnedInIcon = lazy(() =>
-  import("@material-ui/icons/AssignmentTurnedIn")
+const AssignmentTurnedInIcon = lazy(
+  () => import("@material-ui/icons/AssignmentTurnedIn")
 );
 
 const ShoppingCartIcon = lazy(() => import("@material-ui/icons/ShoppingCart"));
-const NotificationsIcon = lazy(() =>
-  import("@material-ui/icons/Notifications")
+const NotificationsIcon = lazy(
+  () => import("@material-ui/icons/Notifications")
 );
 
-const PowerSettingsNewIcon = lazy(() =>
-  import("@material-ui/icons/PowerSettingsNew")
+const PowerSettingsNewIcon = lazy(
+  () => import("@material-ui/icons/PowerSettingsNew")
 );
 
 const Link = lazy(() =>

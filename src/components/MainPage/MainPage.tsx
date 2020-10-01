@@ -1,11 +1,11 @@
 import React, { memo, Fragment, useCallback, lazy, Suspense } from "react";
-import { MainPage_Provider_Interface } from "../utility/Interface";
+import { MainPage_Provider_Interface } from "../../utility/Interface";
 import { useSelector } from "react-redux";
-import generateSelectors from "../store/selectors/root";
-import { XgBusyIndicator } from "./Reusable";
+import generateSelectors from "../../store/selectors/root";
+import { XgBusyIndicator } from "../Reusable/Reusable";
 
-const XiEcommerce = lazy(() => import("./Ecommerce"));
-const SurveyPage = lazy(() => import("./Survey"));
+const XiEcommerce = lazy(() => import("../Ecommerce/Ecommerce"));
+const SurveyPage = lazy(() => import("../Survey/Survey"));
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 
 /**
