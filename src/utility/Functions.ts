@@ -123,6 +123,20 @@ const AppBar_ReducerFunction = (
 };
 
 /**
+ * Function - Authentication
+ * @description
+ * Function to validate Authentication
+ */
+const Authenticate_User = (type: string) => {
+  switch (type) {
+    case "Authenticated":
+      return true;
+    default:
+      return false;
+  }
+};
+
+/**
  * Function - Generate
  * @description
  * Function to generate other functions
@@ -132,6 +146,7 @@ const generateFunctions = () => {
     Validate_Data: Validate_Data,
     Validate_LoginPageDetails: Validate_LoginPageDetails,
     AppBar_ReducerFunction: AppBar_ReducerFunction,
+    Authenticate_User: Authenticate_User,
   };
 };
 

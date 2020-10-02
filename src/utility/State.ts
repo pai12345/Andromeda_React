@@ -227,6 +227,16 @@ const MainPage_State = {
 };
 
 /**
+ * State -  Authenticated
+ * @remarks
+ * Provides details if user is AUthenticated.
+ *
+ */
+const User_Authenticated = {
+  isAuthenticated: false,
+};
+
+/**
  * Function - State
  * @description
  * Function to generate states
@@ -244,6 +254,7 @@ const generateState = () => {
     Survey: Survey_State,
     Alert: Message_Alert,
     MainPage: MainPage_Options,
+    User_Authenticated: User_Authenticated,
   };
 };
 
