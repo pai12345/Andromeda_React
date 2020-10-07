@@ -32,7 +32,7 @@ const Redirect = lazy(() =>
 );
 
 const SignUp = lazy(() =>
-  import("../LoginPage/LoginPage").then((module) => ({
+  import("../SignupPage/SignupPage").then((module) => ({
     default: module.SignUp,
   }))
 );

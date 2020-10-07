@@ -199,19 +199,19 @@ const Shellbar_State = {
   src: require("../styles/iconfinder_React.js_logo_1174949.png"),
   MenuBar: [
     {
-      Text: EnumAppBar.MenuBar_Text,
+      Text: "Account",
     },
     {
       Text: "Settings",
     },
     {
-      Text: "Account",
+      Text: "Customer Care",
     },
     {
       Text: "Sell",
     },
     {
-      Text: "Customer Care",
+      Text: EnumAppBar.MenuBar_Text,
     },
   ],
 };

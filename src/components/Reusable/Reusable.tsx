@@ -455,10 +455,10 @@ export const XgSideNav = memo(() => {
   const __handlechoosemenu = useCallback(
     (type: any) => {
       switch (type) {
-        case "Logout":
+        case "Account":
           return (
-            <MenuItem onClick={Logout}>
-              <PowerSettingsNewIcon />
+            <MenuItem>
+              <AccountBoxIcon />
               &nbsp; {type}
             </MenuItem>
           );
@@ -469,10 +469,10 @@ export const XgSideNav = memo(() => {
               &nbsp; {type}
             </MenuItem>
           );
-        case "Account":
+        case "Sell":
           return (
             <MenuItem>
-              <AccountBoxIcon />
+              <MonetizationOnIcon />
               &nbsp; {type}
             </MenuItem>
           );
@@ -483,10 +483,11 @@ export const XgSideNav = memo(() => {
               &nbsp; {type}
             </MenuItem>
           );
-        case "Sell":
+
+        case "Logout":
           return (
-            <MenuItem>
-              <MonetizationOnIcon />
+            <MenuItem onClick={Logout}>
+              <PowerSettingsNewIcon />
               &nbsp; {type}
             </MenuItem>
           );
