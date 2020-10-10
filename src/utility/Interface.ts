@@ -2,11 +2,11 @@ import { SyntheticEvent } from "react";
 
 //==============================Enum================================//
 /**
- * LoginPage
+ * LoginPage - Login Status
  * @description
  * Enumeration having details for LoginPage
  */
-export enum Util_enum {
+export enum EnumLoginPage_LoginStats {
   NotResponding = "Server did not response with any data",
   title = "Log In",
 }
@@ -16,7 +16,7 @@ export enum Util_enum {
  * @description
  * Enumeration having details for Not Found Page
  */
-export enum EnumNotFoundPage_State {
+export enum EnumNotFoundPage_Stats {
   Header = "404 Page Not Found",
   Content = "The URL entered is wrong. Click below link to navigate to Andromeda",
   Link = "Andromeda",
@@ -54,7 +54,6 @@ export enum EnumAppBar {
   MenuBar_Text = "Logout",
 }
 
-//==============================Interface===========================//
 /**
  * SignUp - Main
  * @description
@@ -171,7 +170,7 @@ export interface LoginPage_LoginBody_Interface {
 }
 
 /**
- * Main Page
+ * Main Page - Provider
  * @description
  * Interface for Main Page
  */
@@ -192,4 +191,39 @@ export interface Appbar_useReducer_Interface {
   open?: boolean | null | EventTarget | HTMLElement;
   selection?: string;
   search?: boolean;
+}
+
+//=======Endpoint=========//
+
+/**
+ * Enpoint - Interface
+ * @description
+ * Interface for Endpoint
+ */
+export interface Endpoint_interface {
+  [Login: string]: string | undefined;
+}
+
+//========Survey==========//
+export interface XgTile_Interface {
+  data: {
+    state: {
+      link: string;
+      tiles: {
+        header: string;
+        text: string;
+        path: string;
+      }[];
+    };
+  };
+}
+
+//======POSTCALL=========//
+export interface POSTCALL_Interface {
+  URL: string;
+  data: {
+    query: string;
+    variables?: any;
+    operationName?: string;
+  };
 }

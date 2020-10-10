@@ -1,5 +1,5 @@
 import axios from "axios";
-import { POSTCALL_Interface } from "../utility/Util";
+import { POSTCALL_Interface } from "../utility/Interface";
 
 axios.defaults.headers = { "content-type": "application/json" };
 

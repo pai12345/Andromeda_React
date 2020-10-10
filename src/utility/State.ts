@@ -1,4 +1,8 @@
-import { Util_enum, EnumNotFoundPage_State, EnumAppBar } from "./Interface";
+import {
+  EnumLoginPage_LoginStats,
+  EnumNotFoundPage_Stats,
+  EnumAppBar,
+} from "./Interface";
 
 /**
  * Sign Up
@@ -79,7 +83,7 @@ const SignUp_State = {
  * Provides details required for Login Page.
  */
 const LoginPage_State = {
-  Title: Util_enum.title,
+  Title: EnumLoginPage_LoginStats.title,
   User: "",
   Password: "",
   SignUp: {
@@ -132,9 +136,9 @@ const Message_Alert = {
  * Provides details of states for Not Found Page.
  */
 const NotFoundPage_State = {
-  Header: EnumNotFoundPage_State.Header,
-  Content: EnumNotFoundPage_State.Content,
-  Link: EnumNotFoundPage_State.Link,
+  Header: EnumNotFoundPage_Stats.Header,
+  Content: EnumNotFoundPage_Stats.Content,
+  Link: EnumNotFoundPage_Stats.Link,
 };
 
 /**

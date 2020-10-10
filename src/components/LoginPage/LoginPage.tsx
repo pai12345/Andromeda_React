@@ -10,15 +10,14 @@ import React, {
 import { useHistory } from "react-router-dom";
 import {
   Endpoint,
-  NullishCoalesce,
   LoginPage_Authenticationresult_Interface,
-  POSTCALL_Interface,
 } from "../../utility/Util";
 import { LayoutPanel as Panel } from "fundamental-react/lib/LayoutPanel";
 import { POSTCALL } from "../../service/service";
 import {
   Error_Customer_enum,
   LoginPage_LoginBody_Interface,
+  POSTCALL_Interface
 } from "../../utility/Interface";
 import generateFunctions from "../../utility/Functions";
 import { useDispatch } from "react-redux";
@@ -70,6 +69,7 @@ export const LoginPageDialog = memo(() => {
   //Functions
   const Validate_LoginPageDetails = generateFunctions()
     .Validate_LoginPageDetails;
+  const NullishCoalesce = generateFunctions().NullishCoalesce;
 
   //redux dispatch
   const dispatch = useDispatch();
@@ -217,6 +217,7 @@ export const LoginPageDialog = memo(() => {
       return error;
     }
   }, [
+    NullishCoalesce,
     Password,
     User,
     Validate_LoginPageDetails,

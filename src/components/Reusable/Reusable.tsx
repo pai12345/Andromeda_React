@@ -19,8 +19,8 @@ import {
 import {
   Appbar_MenuBar_Interface,
   AppBar_HeaderIcon_Interface,
-  XgTile_Interface,
 } from "../../utility/Util";
+import {XgTile_Interface} from "../../utility/Interface";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Snackbar from "@material-ui/core/Snackbar";

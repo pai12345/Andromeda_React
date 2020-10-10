@@ -2,6 +2,7 @@ import {
   Validate_LoginPageDetails_interface,
   Error_Customer_enum,
   Appbar_useReducer_Interface,
+  EnumLoginPage_LoginStats,
 } from "./Interface";
 import isEmail from "validator/lib/isEmail";
 import isEmpty from "validator/lib/isEmpty";
@@ -136,6 +137,17 @@ const Authenticate_User = (type: string) => {
   }
 };
 
+//========Generic==========//
+/**
+ * Function for Nullish Coalescing
+ * @description
+ * Function to check if value is null | undefined
+ */
+const NullishCoalesce = (data: any) => {
+  const validate = data ?? EnumLoginPage_LoginStats;
+  return validate;
+};
+
 /**
  * Function - Generate
  * @description
@@ -147,6 +159,7 @@ const generateFunctions = () => {
     Validate_LoginPageDetails: Validate_LoginPageDetails,
     AppBar_ReducerFunction: AppBar_ReducerFunction,
     Authenticate_User: Authenticate_User,
+    NullishCoalesce: NullishCoalesce,
   };
 };
 

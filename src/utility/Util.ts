@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { EnumAppBar } from "./Interface";
+import { EnumAppBar, Endpoint_interface } from "./Interface";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -22,19 +22,6 @@ export enum Status {
   PageNotFoundTitlte = "Service Not Found",
   PageNotFoundBody = `404 - Service Not Found`,
   ListeningonPort = "Listening on Port",
-}
-
-//============LoginPage============//
-
-//============LoginPage=============//
-/**
- * Enumeration for LoginPage
- * @description
- * Enumeration having details for LoginPage
- */
-export enum Util_enum {
-  NotResponding = "Server did not response with any data",
-  title = "Log In",
 }
 
 //=============AppBar=============//
@@ -180,35 +167,6 @@ export interface AppBar_HeaderIcon_Interface {
   data: () => void;
 }
 
-//=============POSTCALL==============//
-export interface POSTCALL_Interface {
-  URL: string;
-  data: {
-    query: string;
-    variables?: any;
-    operationName?: string;
-  };
-}
-
-//===============Survey==============//
-export interface XgTile_Interface {
-  data: {
-    state: {
-      link: string;
-      tiles: {
-        header: string;
-        text: string;
-        path: string;
-      }[];
-    };
-  };
-}
-
-//=============Endpoint==============//
-interface Endpoint_interface {
-  [Login: string]: string | undefined;
-}
-
 //================================Function================================//
 // //=============AppBar===============//
 // export const AppBar_ReducerFunction = (
@@ -266,17 +224,6 @@ export const SignUp_ReducerFunction = (
     default:
       throw new Error("Unkown Path for SignUp useReducer");
   }
-};
-
-//========Generic==========//
-/**
- * Function for Nullish Coalescing
- * @description
- * Function to check if value is null | undefined
- */
-export const NullishCoalesce = (data: any) => {
-  const validate = data ?? Util_enum;
-  return validate;
 };
 
 //==============================Objects====================================//
