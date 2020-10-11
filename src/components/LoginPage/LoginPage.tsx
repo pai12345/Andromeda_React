@@ -17,7 +17,7 @@ import { POSTCALL } from "../../service/service";
 import {
   Error_Customer_enum,
   LoginPage_LoginBody_Interface,
-  POSTCALL_Interface
+  POSTCALL_Interface,
 } from "../../utility/Interface";
 import generateFunctions from "../../utility/Functions";
 import { useDispatch } from "react-redux";
@@ -109,9 +109,16 @@ export const LoginPageDialog = memo(() => {
   const __handleMessageAlert = useCallback(
     (data: any) => {
       const newState = { ...state_alertmessage };
-      newState.Alert.open = data.open;
-      newState.Alert.Msg.severity = data.severity;
-      newState.Alert.Msg.text = data.text;
+      const severity = data.severity ?? false;
+      const text = data.text ?? false;
+
+      if (severity !== false && text !== false) {
+        newState.Alert.open = data.open;
+        newState.Alert.Msg.severity = data.severity;
+        newState.Alert.Msg.text = data.text;
+      } else {
+        newState.Alert.open = data.open;
+      }
       setAlertMessage(newState);
     },
     [state_alertmessage]
@@ -195,16 +202,16 @@ export const LoginPageDialog = memo(() => {
             severity: "success",
             text: "Success",
           });
+
           setTimeout(() => {
             dispatch(authenticate_reducer({ isAuthenticated: true }));
             __handleClearState();
             __handleMessageAlert({
               open: false,
-              severity: "success",
-              text: "Success",
             });
+
             history.replace("/List");
-          }, 500);
+          }, 300);
         } else {
           __handleMessageAlert({
             open: true,
