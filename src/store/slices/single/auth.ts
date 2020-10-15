@@ -11,11 +11,7 @@ const slice = createSlice({
     userauthentication_reducer: (state, action) => {
       const newstate = { ...state };
       const valid = generateFunctions().Authenticate_User(action.type);
-      if (valid) {
-        newstate.isAuthenticated = true;
-      } else {
-        newstate.isAuthenticated = false;
-      }
+      newstate.isAuthenticated = valid ? true : false;
       return newstate;
     },
   },
