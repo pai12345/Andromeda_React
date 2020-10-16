@@ -130,7 +130,7 @@ const AppBar_ReducerFunction = (
  */
 const Authenticate_User = (type: string) => {
   switch (type) {
-    case "Authenticated":
+    case "true":
       return true;
     default:
       return false;

@@ -204,7 +204,7 @@ export const LoginPageDialog = memo(() => {
           });
 
           setTimeout(() => {
-            dispatch(authenticate_reducer({ isAuthenticated: true }));
+            dispatch(authenticate_reducer({ isAuthenticated: "true" }));
             __handleClearState();
             __handleMessageAlert({
               open: false,
