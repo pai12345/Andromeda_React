@@ -190,11 +190,12 @@ export const LoginPageDialog = memo(() => {
           },
         };
         const Authenticate = await POSTCALL(payload);
+        if(Authenticate.status === "success"){
         const AuthenticationCheck: LoginPage_Authenticationresult_Interface = NullishCoalesce(
           Authenticate
         );
         if (
-          AuthenticationCheck.data.data.Customer.status ===
+          AuthenticationCheck.message.data.data.Customer.status ===
           Error_Customer_enum.Customer_Exist
         ) {
           __handleMessageAlert({
@@ -211,7 +212,7 @@ export const LoginPageDialog = memo(() => {
             });
 
             history.replace("/List");
-          }, 300);
+          }, 500);
         } else {
           __handleMessageAlert({
             open: true,
@@ -219,6 +220,14 @@ export const LoginPageDialog = memo(() => {
             text: "Enter valid username and password",
           });
         }
+      }
+      else {
+        __handleMessageAlert({
+          open: true,
+          severity: "error",
+          text: Authenticate.message.toString(),
+        });
+      }
       }
     } catch (error) {
       return error;

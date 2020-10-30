@@ -14,8 +14,8 @@ export const POSTCALL = async (payload: POSTCALL_Interface) => {
     const { URL, data } = payload;
     const reqX = axios.post(`http://localhost:8000/api/${URL}`, data);
     const [resX] = await Promise.all([reqX]);
-    return resX;
+    return {status: "success", message: resX};
   } catch (error) {
-    return error;
+    return {status:"error", message: error};
   }
 };

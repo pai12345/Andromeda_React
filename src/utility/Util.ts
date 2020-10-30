@@ -91,6 +91,7 @@ export interface LoginPage_useReduce_action_Interface {
 }
 
 export interface LoginPage_Authenticationresult_Interface {
+  message: any;
   data: {
     data: {
       Customer: {
