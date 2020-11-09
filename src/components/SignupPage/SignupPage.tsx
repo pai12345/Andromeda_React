@@ -132,7 +132,7 @@ export const SignUp = memo(() => {
               </Panel.Body>
             </Panel>
             <br></br>
-            <div className="login-signup">
+            <div>
               {SignUp.Text} <Link to={SignUp.Link.URL}>{SignUp.Link.Text}</Link>
             </div>
           </Grid>

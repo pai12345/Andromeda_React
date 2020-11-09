@@ -9,6 +9,10 @@ import React, {
 } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import PersonIcon from "@material-ui/icons/Person";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const Grid = lazy(() => import("@material-ui/core/Grid"));
@@ -64,6 +68,16 @@ const XiEcommerce = memo(() => {
   const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  const useStyles_BottomNavigation = makeStyles({
+    stickToBottom: {
+      width: "100%",
+      position: "fixed",
+      bottom: 0,
+      backgroundColor: "#354a5f",
+    },
+  });
+  const classes_BottomNavigation = useStyles_BottomNavigation();
 
   return (
     <Fragment>
@@ -123,6 +137,20 @@ const XiEcommerce = memo(() => {
               </TabPanel>
             </div>
           </Grid>
+          <BottomNavigation
+            showLabels
+            className={classes_BottomNavigation.stickToBottom}
+          >
+            <BottomNavigationAction style={{ color:"#FFFFFF"}}
+              label="Favorites"
+              icon={<FavoriteBorderIcon style={{ color:"#FFFFFF"}}/>}
+            />
+            <BottomNavigationAction style={{ color:"#FFFFFF"}}
+              label="Customer Care"
+              icon={<PersonIcon style={{ color:"#FFFFFF"}}/>}
+            />
+            
+          </BottomNavigation>
         </Suspense>
       </NoSsr>
     </Fragment>
