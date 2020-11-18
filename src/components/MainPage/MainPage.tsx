@@ -6,6 +6,7 @@ import { XgBusyIndicator } from "../Reusable/Reusable";
 
 const XiEcommerce = lazy(() => import("../Ecommerce/Ecommerce"));
 const SurveyPage = lazy(() => import("../Survey/Survey"));
+const XgChat = lazy(() => import("../Chat/Chat"));
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 
 /**
@@ -24,19 +25,15 @@ const MainPage = memo(() => {
     for (i in data) {
       switch (i) {
         case "Ecommerce":
-          if (data[i]) {
-            return <XiEcommerce />;
-          }
-          break;
+          return <XiEcommerce />;
         case "DevOps":
           break;
         case "Mail":
           break;
         case "Survey":
-          if (data[i]) {
-            return <SurveyPage />;
-          }
-          break;
+          return <SurveyPage />;
+        case "Chat":
+          return <XgChat />;
         default:
           break;
       }

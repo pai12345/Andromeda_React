@@ -13,6 +13,7 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import PersonIcon from "@material-ui/icons/Person";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { XgBusyIndicator } from "../Reusable/Reusable";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const Grid = lazy(() => import("@material-ui/core/Grid"));
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const XiEcommerce = memo(() => {
+const XgEcommerce = memo(() => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -82,7 +83,7 @@ const XiEcommerce = memo(() => {
   return (
     <Fragment>
       <NoSsr>
-        <Suspense fallback={<Fragment>Loading Please Wait....</Fragment>}>
+        <Suspense fallback={<Fragment><XgBusyIndicator/></Fragment>}>
           <Grid
             container
             direction="row"
@@ -157,4 +158,4 @@ const XiEcommerce = memo(() => {
   );
 });
 
-export default XiEcommerce;
+export default XgEcommerce;

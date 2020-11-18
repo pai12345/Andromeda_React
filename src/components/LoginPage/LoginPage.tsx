@@ -24,6 +24,7 @@ import generateFunctions from "../../utility/Functions";
 import { useDispatch } from "react-redux";
 import { authenticate_reducer } from "../../store/slices/single/login";
 import generateState from "../../utility/State";
+// import openSocket from "socket.io-client";
 
 const XgBusyIndicator = lazy(() =>
   import("../Reusable/Reusable").then((module) => ({
@@ -64,6 +65,7 @@ const Grid = lazy(() => import("@material-ui/core/Grid"));
  */
 export const LoginPageDialog = memo(() => {
   try {
+    // openSocket.io("http://localhost:4000", {transports: ['websocket']})
     //Inital States
     const InitialState = generateState().Login.Main;
     const AlertMessage = generateState().Alert;

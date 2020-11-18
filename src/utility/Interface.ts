@@ -199,6 +199,7 @@ export interface MainPage_Provider_Interface {
   DevOps: boolean;
   Mail: boolean;
   Survey: boolean;
+  Chat: boolean;
 }
 
 /**

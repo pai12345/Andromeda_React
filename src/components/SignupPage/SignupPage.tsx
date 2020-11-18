@@ -48,7 +48,7 @@ const Grid = lazy(() => import("@material-ui/core/Grid"));
  * @description
  * Component for SignUp Page
  */
-export const SignUp = memo(() => {
+ const XgSignUp = memo(() => {
   //Functions
   const InitialState = generateState().SignUp;
 
@@ -141,3 +141,5 @@ export const SignUp = memo(() => {
     </Fragment>
   );
 });
+
+export default XgSignUp;

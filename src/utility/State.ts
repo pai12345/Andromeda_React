@@ -188,6 +188,7 @@ const MainPage_Options = {
   DevOps: false,
   Mail: false,
   Survey: false,
+  Chat: false,
 };
 
 /**
@@ -227,7 +228,10 @@ const Shellbar_State = {
  *
  */
 const MainPage_State = {
-  ListData: [{ List1: ["Ecommerce", "DevOps"] }, { List1: ["Mail", "Survey"] }],
+  ListData: [
+    { List1: ["Ecommerce", "DevOps"] },
+    { List1: ["Mail", "Survey", "Chat"] },
+  ],
 };
 
 /**

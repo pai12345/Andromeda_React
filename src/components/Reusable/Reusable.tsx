@@ -20,7 +20,7 @@ import {
   Appbar_MenuBar_Interface,
   AppBar_HeaderIcon_Interface,
 } from "../../utility/Util";
-import {XgTile_Interface} from "../../utility/Interface";
+import { XgTile_Interface } from "../../utility/Interface";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -29,6 +29,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import ChatIcon from "@material-ui/icons/Chat";
 import {
   XgFormLabelInput_Interface,
   XgFormButton_Interface,
@@ -196,6 +197,8 @@ const XgListItem = memo((props: any) => {
         return <MailIcon />;
       case "Survey":
         return <AssignmentTurnedInIcon />;
+      case "Chat":
+        return <ChatIcon />;
       default:
         throw new Error("Unkown Data");
     }
@@ -226,6 +229,10 @@ const XgListItem = memo((props: any) => {
         case "Survey":
           dispatch({ type: "SelectionType", selection: "Survey" });
           newState.Survey = true;
+          break;
+        case "Chat":
+          dispatch({ type: "SelectionType", selection: "Chat" });
+          newState.Chat = true;
           break;
         default:
           break;
