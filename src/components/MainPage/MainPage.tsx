@@ -25,15 +25,24 @@ const MainPage = memo(() => {
     for (i in data) {
       switch (i) {
         case "Ecommerce":
-          return <XiEcommerce />;
+          if (data[i]) {
+            return <XiEcommerce />;
+          }
+          break;
         case "DevOps":
           break;
         case "Mail":
           break;
         case "Survey":
-          return <SurveyPage />;
+          if (data[i]) {
+            return <SurveyPage />;
+          }
+          break;
         case "Chat":
-          return <XgChat />;
+          if (data[i]) {
+            return <XgChat />;
+          }
+          break;
         default:
           break;
       }
