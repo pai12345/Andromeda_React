@@ -245,6 +245,20 @@ const User_Authenticated = {
 };
 
 /**
+ * State - Chat
+ * @remarks
+ * Provides details for Chat
+ */
+const Chat_State = {
+  Chat_board: [
+    {
+      message: "",
+    },
+  ],
+  Chat_message: "",
+};
+
+/**
  * Function - State
  * @description
  * Function to generate states
@@ -263,6 +277,7 @@ const generateState = () => {
     Alert: Message_Alert,
     MainPage: MainPage_Options,
     User_Authenticated: User_Authenticated,
+    Chat_State: Chat_State,
   };
 };
 

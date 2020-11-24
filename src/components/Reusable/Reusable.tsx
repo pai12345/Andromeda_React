@@ -21,15 +21,7 @@ import {
   AppBar_HeaderIcon_Interface,
 } from "../../utility/Util";
 import { XgTile_Interface } from "../../utility/Interface";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
-import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import SettingsIcon from "@material-ui/icons/Settings";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import ChatIcon from "@material-ui/icons/Chat";
 import {
   XgFormLabelInput_Interface,
   XgFormButton_Interface,
@@ -42,6 +34,18 @@ import { selectmode_reducer } from "../../store/slices/single/main";
 import generateFunctions from "../../utility/Functions";
 import generateState from "../../utility/State";
 
+const ChatIcon = lazy(() => import("@material-ui/icons/Chat"));
+const ContactSupportIcon = lazy(
+  () => import("@material-ui/icons/ContactSupport")
+);
+const MonetizationOnIcon = lazy(
+  () => import("@material-ui/icons/MonetizationOn")
+);
+const AccountBoxIcon = lazy(() => import("@material-ui/icons/AccountBox"));
+const SettingsIcon = lazy(() => import("@material-ui/icons/Settings"));
+const Snackbar = lazy(() => import("@material-ui/core/Snackbar"));
+const SearchIcon = lazy(() => import("@material-ui/icons/Search"));
+const InputBase = lazy(() => import("@material-ui/core/InputBase"));
 const AppBar = lazy(() => import("@material-ui/core/AppBar"));
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const Menu = lazy(() => import("@material-ui/core/Menu"));
@@ -65,16 +69,13 @@ const Typography = lazy(() => import("@material-ui/core/Typography"));
 const MenuIcon = lazy(() => import("@material-ui/icons/Menu"));
 const Toolbar = lazy(() => import("@material-ui/core/Toolbar"));
 const IconButton = lazy(() => import("@material-ui/core/IconButton"));
-
 const AssignmentTurnedInIcon = lazy(
   () => import("@material-ui/icons/AssignmentTurnedIn")
 );
-
 const ShoppingCartIcon = lazy(() => import("@material-ui/icons/ShoppingCart"));
 const NotificationsIcon = lazy(
   () => import("@material-ui/icons/Notifications")
 );
-
 const PowerSettingsNewIcon = lazy(
   () => import("@material-ui/icons/PowerSettingsNew")
 );
@@ -90,16 +91,19 @@ const FormGroup = lazy(() =>
     default: module.FormGroup,
   }))
 );
+
 const FormInput = lazy(() =>
   import("fundamental-react/lib/Forms").then((module) => ({
     default: module.FormInput,
   }))
 );
+
 const FormItem = lazy(() =>
   import("fundamental-react/lib/Forms").then((module) => ({
     default: module.FormItem,
   }))
 );
+
 const FormLabel = lazy(() =>
   import("fundamental-react/lib/Forms").then((module) => ({
     default: module.FormLabel,
@@ -282,8 +286,6 @@ const XgListItem = memo((props: any) => {
  */
 const XgHeaderRightIconButton = memo((props: AppBar_HeaderIcon_Interface) => {
   const theme = useTheme();
-
-  //Generate Components
   return (
     <Fragment>
       <NoSsr>
@@ -312,86 +314,6 @@ const XgHeaderRightIconButton = memo((props: AppBar_HeaderIcon_Interface) => {
  * @description
  * Component for Header tab for App
  */
-const drawerWidth = 240;
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    grow: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      display: "none",
-      [theme.breakpoints.up("sm")]: {
-        display: "block",
-      },
-    },
-    search: {
-      position: "relative",
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginRight: theme.spacing(2),
-      marginLeft: 0,
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(3),
-        width: "auto",
-      },
-    },
-    searchIcon: {
-      padding: theme.spacing(0, 2),
-      height: "100%",
-      position: "absolute",
-      pointerEvents: "none",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    inputRoot: {
-      color: "inherit",
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 0),
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "20ch",
-      },
-    },
-    sectionDesktop: {
-      display: "none",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
-      },
-    },
-    sectionMobile: {
-      display: "flex",
-      [theme.breakpoints.up("md")]: {
-        display: "none",
-      },
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: "flex",
-      alignItems: "center",
-      padding: theme.spacing(0, 1),
-      ...theme.mixins.toolbar,
-      justifyContent: "flex-end",
-    },
-  })
-);
-
 // AppBar_Props_Interface
 export const XgSideNav = memo(() => {
   //Function Generators
@@ -408,12 +330,92 @@ export const XgSideNav = memo(() => {
     search: false,
   };
 
+  const drawerWidth = 240;
+  const useStyles_XgSideNav = makeStyles((theme: Theme) =>
+    createStyles({
+      grow: {
+        flexGrow: 1,
+      },
+      menuButton: {
+        marginRight: theme.spacing(2),
+      },
+      title: {
+        display: "none",
+        [theme.breakpoints.up("sm")]: {
+          display: "block",
+        },
+      },
+      search: {
+        position: "relative",
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.white, 0.15),
+        "&:hover": {
+          backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+        marginRight: theme.spacing(2),
+        marginLeft: 0,
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
+          marginLeft: theme.spacing(3),
+          width: "auto",
+        },
+      },
+      searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: "100%",
+        position: "absolute",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      inputRoot: {
+        color: "inherit",
+      },
+      inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create("width"),
+        width: "100%",
+        [theme.breakpoints.up("md")]: {
+          width: "20ch",
+        },
+      },
+      sectionDesktop: {
+        display: "none",
+        [theme.breakpoints.up("md")]: {
+          display: "flex",
+        },
+      },
+      sectionMobile: {
+        display: "flex",
+        [theme.breakpoints.up("md")]: {
+          display: "none",
+        },
+      },
+      drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+      },
+      drawerPaper: {
+        width: drawerWidth,
+      },
+      drawerHeader: {
+        display: "flex",
+        alignItems: "center",
+        padding: theme.spacing(0, 1),
+        ...theme.mixins.toolbar,
+        justifyContent: "flex-end",
+      },
+    })
+  );
+
   //useReducer
   const [state, dispatch] = useReducer(AppBar_ReducerFunction, newstate);
 
   //Features
   const history = useHistory();
-  const classes = useStyles();
+  const classes = useStyles_XgSideNav();
   const dispatchUpdate = useDispatch();
 
   //Selectors
@@ -505,7 +507,6 @@ export const XgSideNav = memo(() => {
     [Logout]
   );
 
-  //Generate Components
   return (
     <Fragment>
       <Suspense
@@ -628,25 +629,28 @@ export const XgBusyIndicator = memo(() => {
 });
 
 /**
- * Component - Message
+ * Component - Alert for Message
  * @description
- * Component for Message
+ * Component for Message Alerting
  */
-const useStyles_Message = makeStyles((theme: Theme) => ({
-  root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
-
 const Alert = (props: AlertProps) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
-// Message_Interface
+/**
+ * Component - Message
+ * @description
+ * Component for Message
+ */
 export const XgMessageToast = (props: any) => {
+  const useStyles_Message = makeStyles((theme: Theme) => ({
+    root: {
+      width: "100%",
+      "& > * + *": {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
   const classes = useStyles_Message();
   const { state, handleCloseMessage } = props.data;
   const { open, Msg } = state;

@@ -117,10 +117,11 @@ const Grid = lazy(() => import("@material-ui/core/Grid"));
               <Panel.Body>
                 {LoginBody.map(
                   (data: SignUp_LoginBody_Interface, index: number) => (
-                    <Fragment>{assignSubComponent(data, index)}</Fragment>
+                    <Fragment key={index}>{assignSubComponent(data, index)}</Fragment>
                   )
                 )}
-                {LoginButton.map((data: any, index: any) => (
+                {LoginButton.map((data: any, index: number) => (
+                  <Fragment key={index}>
                   <XgFormButton
                     data={{
                       data: data,
@@ -128,6 +129,7 @@ const Grid = lazy(() => import("@material-ui/core/Grid"));
                       __handlesubmit: __handlesubmit,
                     }}
                   />
+                  </Fragment>
                 ))}
               </Panel.Body>
             </Panel>
