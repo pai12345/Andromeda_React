@@ -239,6 +239,21 @@ export interface XgTile_Interface {
   };
 }
 
+//===========Chat==========//
+export interface XgChat_TabelPanel_Interface {
+  children: any;
+  value: number;
+  index: number;
+}
+export interface XgChat_XiChatScreen_Interface {
+  Title: string;
+  Chat_board: { message: string }[];
+  Chat_message: string;
+}
+export interface XgChat_Chatboard_Interface {
+  message: string;
+}
+
 //======POSTCALL=========//
 export interface POSTCALL_Interface {
   URL: string;

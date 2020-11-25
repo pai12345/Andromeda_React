@@ -6,39 +6,54 @@ import React, {
   useCallback,
   useState,
   ChangeEvent,
+  SyntheticEvent,
 } from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { XgBusyIndicator } from "../Reusable/Reusable";
-import { createStyles, Theme } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Avatar from "@material-ui/core/Avatar";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
-import Fab from "@material-ui/core/Fab";
-import SendIcon from "@material-ui/icons/Send";
 import generateState from "../../utility/State";
+import {
+  XgChat_TabelPanel_Interface,
+  XgChat_XiChatScreen_Interface,
+  XgChat_Chatboard_Interface,
+} from "../../utility/Interface";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
+const SendIcon = lazy(() => import("@material-ui/icons/Send"));
+const Fab = lazy(() => import("@material-ui/core/Fab"));
+const TextField = lazy(() => import("@material-ui/core/TextField"));
+const Divider = lazy(() => import("@material-ui/core/Divider"));
+const Grid = lazy(() => import("@material-ui/core/Grid"));
+const Avatar = lazy(() => import("@material-ui/core/Avatar"));
+const ListSubheader = lazy(() => import("@material-ui/core/ListSubheader"));
+const ListItemText = lazy(() => import("@material-ui/core/ListItemText"));
+const ListItemAvatar = lazy(() => import("@material-ui/core/ListItemAvatar"));
+const List = lazy(() => import("@material-ui/core/List"));
+const Paper = lazy(() => import("@material-ui/core/Paper"));
+const CssBaseline = lazy(() => import("@material-ui/core/CssBaseline"));
+const Tabs = lazy(() => import("@material-ui/core/Tabs"));
+const Tab = lazy(() => import("@material-ui/core/Tab"));
+const Box = lazy(() => import("@material-ui/core/Box"));
+
+const XgBusyIndicator = lazy(() =>
+  import("../Reusable/Reusable").then((module) => ({
+    default: module.XgBusyIndicator,
+  }))
+);
+
+const XgMessageToast = lazy(() =>
+  import("../Reusable/Reusable").then((module) => ({
+    default: module.XgMessageToast,
+  }))
+);
 
 /**
  * Component - Chat Tab Panel
  * @description
  * Component for Table Panel for Chat.
  */
-const TabPanel = (props) => {
-  const useStyles_Tabs = makeStyles((theme) => ({
+const TabPanel = memo((props: XgChat_TabelPanel_Interface) => {
+  const useStyles_Tabs = makeStyles(() => ({
     root: {
       flexGrow: 1,
     },
@@ -74,20 +89,18 @@ const TabPanel = (props) => {
       </NoSsr>
     </Fragment>
   );
-};
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+});
 
 /**
  * Component - Chat
  * @description
- * Component for Chat
+ * Main Component for Chat
  */
 const XgChat = memo(() => {
+  const Chat_State = generateState().Chat_State;
+
+  const { Screen } = Chat_State;
+
   const useStyles_XgChat = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -104,7 +117,7 @@ const XgChat = memo(() => {
     },
   }));
   const classes = useStyles_XgChat();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const a11yProps = useCallback((index: number) => {
     return {
@@ -113,7 +126,7 @@ const XgChat = memo(() => {
     };
   }, []);
 
-  const handleChange = useCallback((event, newValue) => {
+  const handleChange = useCallback((_event, newValue: number) => {
     setValue(newValue);
   }, []);
 
@@ -145,21 +158,23 @@ const XgChat = memo(() => {
                     aria-label="Vertical tabs example"
                     className={classes.tabs}
                   >
-                    <Tab label="Customer Care" {...a11yProps(0)} />
-                    <Tab label="Emergency" {...a11yProps(1)} />
-                    <Tab label="Friend" {...a11yProps(1)} />
+                    {Screen.map((data, index) => (
+                      <Tab
+                        key={index}
+                        label={data.Title}
+                        {...a11yProps(index)}
+                      />
+                    ))}
                   </Tabs>
                 </Grid>
                 <Grid item xs={6}>
-                  <TabPanel value={value} index={0}>
-                    <ChatScreen />
-                  </TabPanel>
-                  <TabPanel value={value} index={1}>
-                    <ChatScreen />
-                  </TabPanel>
-                  <TabPanel value={value} index={2}>
-                    <ChatScreen />
-                  </TabPanel>
+                  {Screen.map((data, index) => (
+                    <Fragment key={index + 1}>
+                      <TabPanel value={value} index={index}>
+                        <XiChatScreen {...data} />
+                      </TabPanel>
+                    </Fragment>
+                  ))}
                 </Grid>
               </div>
             </Grid>
@@ -170,28 +185,13 @@ const XgChat = memo(() => {
   );
 });
 
-const ChatScreen = memo(() => {
-  const Chat_State = generateState().Chat_State;
-  const { Chat_board, Chat_message } = Chat_State;
-
-  const [state_Chat_board, setState_Chat_board] = useState(Chat_board);
-  const [state_Chat_message, setState_Chat_message] = useState(Chat_message);
-
-  const _handlepress_Chat_board = useCallback(() => {
-    const newstate = [...state_Chat_board];
-    const newObj = {"message":state_Chat_message};
-    newstate.push(newObj);
-    setState_Chat_board(newstate);
-  }, [state_Chat_board, state_Chat_message]);
-
-  const _handleChange_Chat_message = useCallback(
-    (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setState_Chat_message(evt.target.value);
-    },
-    []
-  );
-
-  const ChatScreen_Styles = makeStyles((theme: Theme) =>
+/**
+ * Component - Chat Board
+ * @description
+ * Component for Chat Board & Messages
+ */
+const XiChatScreen = memo((props: XgChat_XiChatScreen_Interface) => {
+  const XiChatScreen_Styles = makeStyles((theme: Theme) =>
     createStyles({
       text: {
         padding: theme.spacing(2, 2, 0),
@@ -221,7 +221,78 @@ const ChatScreen = memo(() => {
       },
     })
   );
-  const classes = ChatScreen_Styles();
+  const classes = XiChatScreen_Styles();
+  const { Title, Chat_board, Chat_message } = props;
+
+  const [state_Chat_board, setState_Chat_board] = useState(Chat_board);
+  const [state_Chat_message, setState_Chat_message] = useState(Chat_message);
+
+  //============XgMessageToast=============//
+  const AlertMessage = generateState().Alert;
+  const [state_alertmessage, setAlertMessage] = useState(AlertMessage);
+  const { open } = state_alertmessage.Alert;
+
+  //Close Message
+  const handleCloseMessage = useCallback(
+    (event?: SyntheticEvent, reason?: string) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      const newState = { ...state_alertmessage };
+      newState.Alert.open = false;
+      setAlertMessage(newState);
+    },
+    [state_alertmessage]
+  );
+
+  //Props for XgMessageToast
+  const MessageData = {
+    state: state_alertmessage.Alert,
+    handleCloseMessage: handleCloseMessage,
+  };
+
+  //Message Alert Change
+  const __handleMessageAlert = useCallback(
+    (data) => {
+      const newState = { ...state_alertmessage };
+      const severity = data.severity ?? false;
+      const text = data.text ?? false;
+
+      if (severity !== false && text !== false) {
+        newState.Alert.open = data.open;
+        newState.Alert.Msg.severity = data.severity;
+        newState.Alert.Msg.text = data.text;
+      } else {
+        newState.Alert.open = data.open;
+      }
+      setAlertMessage(newState);
+    },
+    [state_alertmessage]
+  );
+  //=========================================//
+
+  const _handlepress_Chat_board = useCallback(() => {
+    if (state_Chat_message === "") {
+      __handleMessageAlert({
+        open: true,
+        severity: "error",
+        text: "Enter Message",
+      });
+    } else {
+      const newstate = [...state_Chat_board];
+      const newObj = { message: state_Chat_message };
+      newstate.push(newObj);
+      setState_Chat_message("");
+      setState_Chat_board(newstate);
+    }
+  }, [__handleMessageAlert, state_Chat_board, state_Chat_message]);
+
+  const _handleChange_Chat_message = useCallback(
+    (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setState_Chat_message(evt.target.value);
+    },
+    []
+  );
 
   return (
     <div className={classes.grow}>
@@ -243,24 +314,26 @@ const ChatScreen = memo(() => {
                   variant="h5"
                   gutterBottom
                 >
-                  Chat
+                  {Title}
                 </Typography>
                 <List className={classes.list}>
                   <ListSubheader className={classes.subheader}>
                     Today
                   </ListSubheader>
-                  {state_Chat_board.map((data, index) => (
-                    <Fragment key={index}>
-                      {data.message ? (
-                        <ListItem>
-                          <ListItemAvatar>
-                            <Avatar alt="Profile Picture" src={""} />
-                          </ListItemAvatar>
-                          <ListItemText primary={data.message} />
-                        </ListItem>
-                      ) : null}
-                    </Fragment>
-                  ))}
+                  {state_Chat_board.map(
+                    (data: XgChat_Chatboard_Interface, index: number) => (
+                      <Fragment key={index}>
+                        {data.message ? (
+                          <ListItem>
+                            <ListItemAvatar>
+                              <Avatar alt="Profile Picture" src={""} />
+                            </ListItemAvatar>
+                            <ListItemText primary={data.message} />
+                          </ListItem>
+                        ) : null}
+                      </Fragment>
+                    )
+                  )}
                 </List>
                 <Divider />
                 <Grid container style={{ padding: "20px" }}>
@@ -269,7 +342,7 @@ const ChatScreen = memo(() => {
                       id="outlined-basic-email"
                       label="Type Message"
                       fullWidth
-                      defaultValue={state_Chat_message}
+                      value={state_Chat_message}
                       onChange={(evt) => _handleChange_Chat_message(evt)}
                     />
                   </Grid>
@@ -281,6 +354,7 @@ const ChatScreen = memo(() => {
                 </Grid>
               </Paper>
             </Grid>
+            {open ? <XgMessageToast data={MessageData} /> : null}
           </Suspense>
         </NoSsr>
       </Fragment>
