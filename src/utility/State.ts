@@ -279,12 +279,7 @@ const Chat_State = {
       Chat_message: "",
     },
   ],
-  Chat_board: [
-    {
-      message: "",
-    },
-  ],
-  Chat_message: "",
+  SocketOpen: true,
 };
 
 /**

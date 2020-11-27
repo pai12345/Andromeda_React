@@ -14,9 +14,11 @@ import ListItem from "@material-ui/core/ListItem";
 import generateState from "../../utility/State";
 import {
   XgChat_TabelPanel_Interface,
-  XgChat_XiChatScreen_Interface,
+  // XgChat_XiChatScreen_Interface,
   XgChat_Chatboard_Interface,
 } from "../../utility/Interface";
+import openSocket from "socket.io-client";
+import {io} from "socket.io-client";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const SendIcon = lazy(() => import("@material-ui/icons/Send"));
@@ -48,50 +50,6 @@ const XgMessageToast = lazy(() =>
 );
 
 /**
- * Component - Chat Tab Panel
- * @description
- * Component for Table Panel for Chat.
- */
-const TabPanel = memo((props: XgChat_TabelPanel_Interface) => {
-  const useStyles_Tabs = makeStyles(() => ({
-    root: {
-      flexGrow: 1,
-    },
-  }));
-  const classes = useStyles_Tabs();
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Fragment>
-      <NoSsr>
-        <Suspense
-          fallback={
-            <Fragment>
-              <XgBusyIndicator />
-            </Fragment>
-          }
-        >
-          <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
-            {...other}
-            className={classes.root}
-          >
-            {value === index && (
-              <Box p={3}>
-                <Typography component={"span"}>{children}</Typography>
-              </Box>
-            )}
-          </div>
-        </Suspense>
-      </NoSsr>
-    </Fragment>
-  );
-});
-
-/**
  * Component - Chat
  * @description
  * Main Component for Chat
@@ -99,7 +57,37 @@ const TabPanel = memo((props: XgChat_TabelPanel_Interface) => {
 const XgChat = memo(() => {
   const Chat_State = generateState().Chat_State;
 
-  const { Screen } = Chat_State;
+  const { Screen, SocketOpen } = Chat_State;
+  const [state_SocketOpen, setState_SocketOpen] = useState(SocketOpen);
+
+  const SocketOpen_Close = useCallback(
+    (data: any) => {
+      if (data === true) {
+        console.log(state_SocketOpen);
+
+        // if(state_SocketOpen === true){
+        // const socket = openSocket.io("http://localhost:4000", {transports: ['websocket']});
+        // socket.on("post", data1 => {
+        //   console.log(data);
+        // })
+        io("http://localhost:4000", {transports: ['websocket']});
+        const newstate_SocketOpen = false;
+        setState_SocketOpen(newstate_SocketOpen);
+        // }
+      }
+    },
+    [state_SocketOpen]
+  );
+
+  const _handle_SocketOpen = useCallback(
+    (data: any) => {
+      return {
+        XiChatScreen_Data: data,
+        SocketOpen_Close: SocketOpen_Close,
+      };
+    },
+    [SocketOpen_Close]
+  );
 
   const useStyles_XgChat = makeStyles((theme) => ({
     root: {
@@ -170,9 +158,9 @@ const XgChat = memo(() => {
                 <Grid item xs={6}>
                   {Screen.map((data, index) => (
                     <Fragment key={index + 1}>
-                      <TabPanel value={value} index={index}>
-                        <XiChatScreen {...data} />
-                      </TabPanel>
+                      <XiTabPanel value={value} index={index}>
+                        <XiChatScreen {..._handle_SocketOpen(data)} />
+                      </XiTabPanel>
                     </Fragment>
                   ))}
                 </Grid>
@@ -186,11 +174,56 @@ const XgChat = memo(() => {
 });
 
 /**
+ * Component - Chat Tab Panel
+ * @description
+ * Component for Table Panel for Chat.
+ */
+const XiTabPanel = memo((props: XgChat_TabelPanel_Interface) => {
+  const useStyles_Tabs = makeStyles(() => ({
+    root: {
+      flexGrow: 1,
+    },
+  }));
+  const classes = useStyles_Tabs();
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Fragment>
+      <NoSsr>
+        <Suspense
+          fallback={
+            <Fragment>
+              <XgBusyIndicator />
+            </Fragment>
+          }
+        >
+          <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+            className={classes.root}
+          >
+            {value === index && (
+              <Box p={3}>
+                <Typography component={"span"}>{children}</Typography>
+              </Box>
+            )}
+          </div>
+        </Suspense>
+      </NoSsr>
+    </Fragment>
+  );
+});
+
+/**
  * Component - Chat Board
  * @description
  * Component for Chat Board & Messages
  */
-const XiChatScreen = memo((props: XgChat_XiChatScreen_Interface) => {
+// XgChat_XiChatScreen_Interface
+const XiChatScreen = memo((props: any) => {
   const XiChatScreen_Styles = makeStyles((theme: Theme) =>
     createStyles({
       text: {
@@ -222,7 +255,9 @@ const XiChatScreen = memo((props: XgChat_XiChatScreen_Interface) => {
     })
   );
   const classes = XiChatScreen_Styles();
-  const { Title, Chat_board, Chat_message } = props;
+
+  const { XiChatScreen_Data, SocketOpen_Close } = props;
+  const { Title, Chat_board, Chat_message } = XiChatScreen_Data;
 
   const [state_Chat_board, setState_Chat_board] = useState(Chat_board);
   const [state_Chat_message, setState_Chat_message] = useState(Chat_message);
@@ -284,8 +319,14 @@ const XiChatScreen = memo((props: XgChat_XiChatScreen_Interface) => {
       newstate.push(newObj);
       setState_Chat_message("");
       setState_Chat_board(newstate);
+      SocketOpen_Close(true);
     }
-  }, [__handleMessageAlert, state_Chat_board, state_Chat_message]);
+  }, [
+    SocketOpen_Close,
+    __handleMessageAlert,
+    state_Chat_board,
+    state_Chat_message,
+  ]);
 
   const _handleChange_Chat_message = useCallback(
     (evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
