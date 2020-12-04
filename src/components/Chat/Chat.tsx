@@ -17,8 +17,7 @@ import {
   // XgChat_XiChatScreen_Interface,
   XgChat_Chatboard_Interface,
 } from "../../utility/Interface";
-import openSocket from "socket.io-client";
-import {io} from "socket.io-client";
+import {io,Socket} from "socket.io-client";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const SendIcon = lazy(() => import("@material-ui/icons/Send"));
@@ -70,7 +69,17 @@ const XgChat = memo(() => {
         // socket.on("post", data1 => {
         //   console.log(data);
         // })
-        io("http://localhost:4000", {transports: ['websocket']});
+       const socket = io("http://localhost:4000");
+    
+        socket.on("connect", (data_test: Socket) => {
+          console.log(data_test);
+          socket.on("userjoined", (message:Socket) => {
+            console.log(message);
+          });
+  
+          socket.emit("chatmessage", { payload: ["a", "b"] });
+        });
+
         const newstate_SocketOpen = false;
         setState_SocketOpen(newstate_SocketOpen);
         // }
