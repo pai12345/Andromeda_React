@@ -250,35 +250,33 @@ const User_Authenticated = {
  * Provides details for Chat
  */
 const Chat_State = {
-  Screen: [
-    {
-      Title: "CUSTOMER CARE",
-      Chat_board: [
-        {
-          message: "How can I help you?",
-        },
-      ],
-      Chat_message: "",
-    },
-    {
-      Title: "EMERGENCY",
-      Chat_board: [
-        {
-          message: "How can I help you?",
-        },
-      ],
-      Chat_message: "",
-    },
-    {
-      Title: "FRIEND",
-      Chat_board: [
-        {
-          message: "",
-        },
-      ],
-      Chat_message: "",
-    },
-  ],
+  Screen: {
+    DirectChannel: [
+      {
+        Title: "CUSTOMER CARE",
+        Chat_board: [
+          {
+            message: "How can I help you?",
+          },
+        ],
+        Chat_message: "",
+      },
+      {
+        Title: "EMERGENCY",
+        Chat_board: [
+          {
+            message: "How can I help you?",
+          },
+        ],
+        Chat_message: "",
+      },
+    ],
+    AdditionalChannel: [
+      {
+        Title: "CHANNEL",
+      },
+    ],
+  },
   SocketOpen: true,
 };
 

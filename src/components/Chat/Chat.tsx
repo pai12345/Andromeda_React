@@ -17,7 +17,8 @@ import {
   // XgChat_XiChatScreen_Interface,
   XgChat_Chatboard_Interface,
 } from "../../utility/Interface";
-import {io,Socket} from "socket.io-client";
+import { io, Socket } from "socket.io-client";
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const SendIcon = lazy(() => import("@material-ui/icons/Send"));
@@ -57,8 +58,16 @@ const XgChat = memo(() => {
   const Chat_State = generateState().Chat_State;
 
   const { Screen, SocketOpen } = Chat_State;
+  const { DirectChannel, AdditionalChannel } = Screen;
+  
+  const [openDirectChannel, setState_openDirectChannel] = useState(true);
   const [state_SocketOpen, setState_SocketOpen] = useState(SocketOpen);
 
+  const __handle_openDirectChannel = useCallback((evt:boolean) => {
+    setState_openDirectChannel(evt);
+  }, []);
+
+  
   const SocketOpen_Close = useCallback(
     (data: any) => {
       if (data === true) {
@@ -116,6 +125,10 @@ const XgChat = memo(() => {
   const classes = useStyles_XgChat();
   const [value, setValue] = useState(0);
 
+  const handleChange = useCallback((_event, newValue: number) => {
+    setValue(newValue);
+  }, []);
+
   const a11yProps = useCallback((index: number) => {
     return {
       id: `vertical-tab-${index}`,
@@ -123,8 +136,22 @@ const XgChat = memo(() => {
     };
   }, []);
 
-  const handleChange = useCallback((_event, newValue: number) => {
-    setValue(newValue);
+  const a11yProps_wrapped = useCallback((index: number) => {
+    return {
+      id: `wrapped-tab-${index}`,
+      'aria-controls': `wrapped-tabpanel-${index}`,
+    };
+  }, []);
+
+  const check_icon = useCallback((evt: string) => {
+    switch (evt) {
+      case "CHANNEL": {
+        return <AddCircleIcon />
+      }
+      default: {
+        return ""
+      }
+    }
   }, []);
 
   return (
@@ -155,23 +182,50 @@ const XgChat = memo(() => {
                     aria-label="Vertical tabs example"
                     className={classes.tabs}
                   >
-                    {Screen.map((data, index) => (
+                    {DirectChannel.map((data, index) => (
                       <Tab
                         key={index}
                         label={data.Title}
                         {...a11yProps(index)}
+                        onClick={()=>__handle_openDirectChannel(true)}
+                      />
+                    ))}
+                    {AdditionalChannel.map((data, index) => (
+                      <Tab
+                        key={index}
+                        label={data.Title}
+                        wrapped
+                        {...a11yProps_wrapped(index)}
+                        icon={check_icon(data.Title)}
+                        onClick={()=>__handle_openDirectChannel(false)}
                       />
                     ))}
                   </Tabs>
                 </Grid>
                 <Grid item xs={6}>
-                  {Screen.map((data, index) => (
+                  {openDirectChannel ?
+                  <Fragment>
+                  {DirectChannel.map((data, index) => (
                     <Fragment key={index + 1}>
                       <XiTabPanel value={value} index={index}>
                         <XiChatScreen {..._handle_SocketOpen(data)} />
                       </XiTabPanel>
                     </Fragment>
-                  ))}
+                  ))
+                      }
+                    </Fragment> 
+                    :
+                    <Fragment>
+                      {AdditionalChannel.map((data, index) => (
+                        <Fragment key={index + 1}>
+                          <XiTabPanel value={value} index={index}>
+                            <Fragment>Hallo</Fragment>
+                          </XiTabPanel>
+                        </Fragment>
+                      ))
+                      }
+                    </Fragment>
+                  }
                 </Grid>
               </div>
             </Grid>
