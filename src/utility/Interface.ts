@@ -64,7 +64,7 @@ export enum Error_Customer_enum {
 }
 
 /**
- * Enumeration for AppBar
+ * Enumeration - AppBar
  * @description
  * Enumeration having details for AppBar
  */
@@ -72,6 +72,15 @@ export enum EnumAppBar {
   productTitle = "Andromeda",
   alt = "Andromeda",
   MenuBar_Text = "Logout",
+}
+
+/**
+ * Enumeration - Socket
+ * @description
+ * Enumeration for Socket
+ */
+export enum Socket_Enum {
+  unkownURLpath = "Unkown URL path",
 }
 
 /**

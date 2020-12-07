@@ -3,6 +3,7 @@ import {
   Error_Customer_enum,
   Appbar_useReducer_Interface,
   EnumLoginPage_LoginStats,
+  Socket_Enum,
 } from "./Interface";
 import isEmail from "validator/lib/isEmail";
 import isEmpty from "validator/lib/isEmpty";
@@ -148,6 +149,23 @@ const NullishCoalesce = (data: any) => {
   return validate;
 };
 
+//=========Socket==========//
+const GeneratSocketURL = (data: string) => {
+  let URL: string;
+  switch (data) {
+    case "CustomerCare":
+      URL = "CustomerCare";
+      break;
+    case "Emergency":
+      URL = "Emergency";
+      break;
+    default:
+      throw new Error(Socket_Enum.unkownURLpath);
+  }
+  const socketURL = `http://localhost:4000/${URL}`;
+  return socketURL;
+};
+
 /**
  * Function - Generate
  * @description
@@ -160,6 +178,7 @@ const generateFunctions = () => {
     AppBar_ReducerFunction: AppBar_ReducerFunction,
     Authenticate_User: Authenticate_User,
     NullishCoalesce: NullishCoalesce,
+    GeneratSocketURL: GeneratSocketURL,
   };
 };
 

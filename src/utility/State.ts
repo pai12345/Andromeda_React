@@ -250,34 +250,45 @@ const User_Authenticated = {
  * Provides details for Chat
  */
 const Chat_State = {
-  Screen: {
-    DirectChannel: [
-      {
-        Title: "CUSTOMER CARE",
-        Chat_board: [
-          {
-            message: "How can I help you?",
-          },
-        ],
-        Chat_message: "",
-      },
-      {
-        Title: "EMERGENCY",
-        Chat_board: [
-          {
-            message: "How can I help you?",
-          },
-        ],
-        Chat_message: "",
-      },
-    ],
-    AdditionalChannel: [
-      {
-        Title: "CHANNEL",
-      },
-    ],
-  },
+  Screen: [
+    {
+      Title: "CUSTOMER CARE",
+      Chat_board: [
+        {
+          message: "How can I help you?",
+        },
+      ],
+      Chat_message: "",
+    },
+    {
+      Title: "EMERGENCY",
+      Chat_board: [
+        {
+          message: "How can I help you?",
+        },
+      ],
+      Chat_message: "",
+    },
+    {
+      Title: "CHANNEL",
+      Chat_board: [
+        {
+          message: "How can I help you?",
+        },
+      ],
+      Chat_message: "",
+    },
+  ],
   SocketOpen: true,
+};
+
+/**
+ * State - Chat Channel
+ * @remarks
+ * Provides details for Chat Channel
+ */
+const ChatChannel_State = {
+  Types: ["Add Friends", "Browse Channels", "Add Private Channel"],
 };
 
 /**
@@ -300,6 +311,7 @@ const generateState = () => {
     MainPage: MainPage_Options,
     User_Authenticated: User_Authenticated,
     Chat_State: Chat_State,
+    ChatChannel_State: ChatChannel_State,
   };
 };
 

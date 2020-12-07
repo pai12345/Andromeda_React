@@ -1,4 +1,59 @@
-import openSocket from "socket.io-client";
+import { io, Socket } from "socket.io-client";
+import generateFunctions from "../utility/Functions";
 
-// const socket = openSocket.io("http://localhost:4000");
-// export default socket;
+/**
+ * Function - Customer Care
+ * @description
+ * Function having details for Socket Namespace - Customer Care.
+ */
+const CustomerCare = () => {
+  try {
+    const GeneratSocketURL = generateFunctions().GeneratSocketURL(
+      "CustomerCare"
+    );
+    const socket = io(GeneratSocketURL);
+
+    socket.on("connect", (data_test: Socket) => {
+      console.log(data_test);
+      socket.on("userjoined", (message: Socket) => {
+        console.log(message);
+      });
+
+      socket.emit("chatmessage", { payload: ["a", "b"] });
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+/**
+ * Function - Emergency
+ * @description
+ * Function having details for Socket Namespace - Emergency.
+ */
+const Emergency = () => {
+  try {
+    const GeneratSocketURL = generateFunctions().GeneratSocketURL("Emergency");
+    const socket = io(GeneratSocketURL);
+
+    socket.on("connect", (data_test: Socket) => {
+      console.log(data_test);
+      socket.on("userjoined", (message: Socket) => {
+        console.log(message);
+      });
+
+      socket.emit("chatmessage", { payload: ["a", "b"] });
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const generatesocket = () => {
+  return {
+    CustomerCare: CustomerCare,
+    Emergency: Emergency,
+  };
+};
+
+export default generatesocket;

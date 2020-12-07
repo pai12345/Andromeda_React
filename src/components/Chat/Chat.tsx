@@ -17,8 +17,10 @@ import {
   // XgChat_XiChatScreen_Interface,
   XgChat_Chatboard_Interface,
 } from "../../utility/Interface";
-import { io, Socket } from "socket.io-client";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import generatesocket from "../../service/socket";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import PageviewIcon from "@material-ui/icons/Pageview";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const SendIcon = lazy(() => import("@material-ui/icons/Send"));
@@ -58,37 +60,18 @@ const XgChat = memo(() => {
   const Chat_State = generateState().Chat_State;
 
   const { Screen, SocketOpen } = Chat_State;
-  const { DirectChannel, AdditionalChannel } = Screen;
-  
-  const [openDirectChannel, setState_openDirectChannel] = useState(true);
   const [state_SocketOpen, setState_SocketOpen] = useState(SocketOpen);
 
-  const __handle_openDirectChannel = useCallback((evt:boolean) => {
-    setState_openDirectChannel(evt);
-  }, []);
-
-  
   const SocketOpen_Close = useCallback(
     (data: any) => {
       if (data === true) {
         console.log(state_SocketOpen);
-
         // if(state_SocketOpen === true){
         // const socket = openSocket.io("http://localhost:4000", {transports: ['websocket']});
         // socket.on("post", data1 => {
         //   console.log(data);
         // })
-       const socket = io("http://localhost:4000");
-    
-        socket.on("connect", (data_test: Socket) => {
-          console.log(data_test);
-          socket.on("userjoined", (message:Socket) => {
-            console.log(message);
-          });
-  
-          socket.emit("chatmessage", { payload: ["a", "b"] });
-        });
-
+        generatesocket().CustomerCare();
         const newstate_SocketOpen = false;
         setState_SocketOpen(newstate_SocketOpen);
         // }
@@ -136,20 +119,13 @@ const XgChat = memo(() => {
     };
   }, []);
 
-  const a11yProps_wrapped = useCallback((index: number) => {
-    return {
-      id: `wrapped-tab-${index}`,
-      'aria-controls': `wrapped-tabpanel-${index}`,
-    };
-  }, []);
-
   const check_icon = useCallback((evt: string) => {
     switch (evt) {
       case "CHANNEL": {
-        return <AddCircleIcon />
+        return <AddCircleIcon />;
       }
       default: {
-        return ""
+        return "";
       }
     }
   }, []);
@@ -182,50 +158,24 @@ const XgChat = memo(() => {
                     aria-label="Vertical tabs example"
                     className={classes.tabs}
                   >
-                    {DirectChannel.map((data, index) => (
+                    {Screen.map((data, index) => (
                       <Tab
                         key={index}
                         label={data.Title}
                         {...a11yProps(index)}
-                        onClick={()=>__handle_openDirectChannel(true)}
-                      />
-                    ))}
-                    {AdditionalChannel.map((data, index) => (
-                      <Tab
-                        key={index}
-                        label={data.Title}
-                        wrapped
-                        {...a11yProps_wrapped(index)}
                         icon={check_icon(data.Title)}
-                        onClick={()=>__handle_openDirectChannel(false)}
                       />
                     ))}
                   </Tabs>
                 </Grid>
                 <Grid item xs={6}>
-                  {openDirectChannel ?
-                  <Fragment>
-                  {DirectChannel.map((data, index) => (
+                  {Screen.map((data, index) => (
                     <Fragment key={index + 1}>
                       <XiTabPanel value={value} index={index}>
                         <XiChatScreen {..._handle_SocketOpen(data)} />
                       </XiTabPanel>
                     </Fragment>
-                  ))
-                      }
-                    </Fragment> 
-                    :
-                    <Fragment>
-                      {AdditionalChannel.map((data, index) => (
-                        <Fragment key={index + 1}>
-                          <XiTabPanel value={value} index={index}>
-                            <Fragment>Hallo</Fragment>
-                          </XiTabPanel>
-                        </Fragment>
-                      ))
-                      }
-                    </Fragment>
-                  }
+                  ))}
                 </Grid>
               </div>
             </Grid>
@@ -411,58 +361,114 @@ const XiChatScreen = memo((props: any) => {
           >
             <Grid item xs={12}>
               <CssBaseline />
-              <Paper square className={classes.paper}>
-                <Typography
-                  component={"span"}
-                  className={classes.text}
-                  variant="h5"
-                  gutterBottom
-                >
-                  {Title}
-                </Typography>
-                <List className={classes.list}>
-                  <ListSubheader className={classes.subheader}>
-                    Today
-                  </ListSubheader>
-                  {state_Chat_board.map(
-                    (data: XgChat_Chatboard_Interface, index: number) => (
-                      <Fragment key={index}>
-                        {data.message ? (
-                          <ListItem>
-                            <ListItemAvatar>
-                              <Avatar alt="Profile Picture" src={""} />
-                            </ListItemAvatar>
-                            <ListItemText primary={data.message} />
-                          </ListItem>
-                        ) : null}
-                      </Fragment>
-                    )
-                  )}
-                </List>
-                <Divider />
-                <Grid container style={{ padding: "20px" }}>
-                  <Grid item xs={11}>
-                    <TextField
-                      id="outlined-basic-email"
-                      label="Type Message"
-                      fullWidth
-                      value={state_Chat_message}
-                      onChange={(evt) => _handleChange_Chat_message(evt)}
-                    />
+              {Title !== "CHANNEL" ? (
+                <Paper square className={classes.paper}>
+                  <Typography
+                    component={"span"}
+                    className={classes.text}
+                    variant="h5"
+                    gutterBottom
+                  >
+                    {Title}
+                  </Typography>
+                  <List className={classes.list}>
+                    <ListSubheader className={classes.subheader}>
+                      Today
+                    </ListSubheader>
+                    {state_Chat_board.map(
+                      (data: XgChat_Chatboard_Interface, index: number) => (
+                        <Fragment key={index}>
+                          {data.message ? (
+                            <ListItem>
+                              <ListItemAvatar>
+                                <Avatar alt="Profile Picture" src={""} />
+                              </ListItemAvatar>
+                              <ListItemText primary={data.message} />
+                            </ListItem>
+                          ) : null}
+                        </Fragment>
+                      )
+                    )}
+                  </List>
+                  <Divider />
+                  <Grid container style={{ padding: "20px" }}>
+                    <Grid item xs={11}>
+                      <TextField
+                        id="outlined-basic-email"
+                        label="Type Message"
+                        fullWidth
+                        value={state_Chat_message}
+                        onChange={(evt) => _handleChange_Chat_message(evt)}
+                      />
+                    </Grid>
+                    <Grid item xs={1}>
+                      <Fab size="small" color="primary" aria-label="add">
+                        <SendIcon onClick={_handlepress_Chat_board} />
+                      </Fab>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={1}>
-                    <Fab size="small" color="primary" aria-label="add">
-                      <SendIcon onClick={_handlepress_Chat_board} />
-                    </Fab>
-                  </Grid>
-                </Grid>
-              </Paper>
+                </Paper>
+              ) : (
+                <XiAddChannel />
+              )}
             </Grid>
             {open ? <XgMessageToast data={MessageData} /> : null}
           </Suspense>
         </NoSsr>
       </Fragment>
     </div>
+  );
+});
+
+/**
+ * Component - Create Channel
+ * @description
+ * Component for Create Channel.
+ */
+const XiAddChannel = memo(() => {
+  const ChatChannel_State = generateState().ChatChannel_State;
+  const { Types } = ChatChannel_State;
+
+  const check_icon = useCallback((evt: string) => {
+    switch (evt) {
+      case "Add Friends":
+        return <AddCircleIcon />;
+      case "Browse Channels":
+        return <PageviewIcon />;
+      case "Add Private Channel":
+        return <GroupAddIcon />;
+      default:
+        throw new Error("Unkown data for icon check");
+    }
+  }, []);
+
+  return (
+    <Fragment>
+      <NoSsr>
+        <Suspense
+          fallback={
+            <Fragment>
+              <XgBusyIndicator />
+            </Fragment>
+          }
+        >
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            {Types.map((data: string, index: number) => (
+              <Fragment key={index}>
+                <Grid item xs={4} style={{ paddingRight: "20px" }}>
+                    {data}{check_icon(data)}
+                </Grid>
+              </Fragment>
+            ))}
+          </Grid>
+        </Suspense>
+      </NoSsr>
+    </Fragment>
   );
 });
 
