@@ -8,6 +8,8 @@ import {
 import isEmail from "validator/lib/isEmail";
 import isEmpty from "validator/lib/isEmpty";
 import isLength from "validator/lib/isLength";
+import crypto from "crypto";
+import generateConfigurations from "../configurations/configurations";
 
 /**
  * Function - Validate Data
@@ -167,6 +169,27 @@ const GeneratSocketURL = (data: string) => {
 };
 
 /**
+ * Function - Decrypt Room
+ * @param data encrypted room id
+ * @return room id
+ */
+const Decrypt_Room = (data: string) => {
+  const ENCRYPTION_KEY: any = generateConfigurations().ENCRYPTION_KEY;
+  const textParts: any = data.split(":");
+  const iv = Buffer.from(textParts.shift(), "hex");
+  const encryptedText = Buffer.from(textParts.join(":"), "hex");
+  const decipher = crypto.createDecipheriv(
+    "aes-256-cbc",
+    Buffer.from(ENCRYPTION_KEY),
+    iv
+  );
+  const decrypted = decipher.update(encryptedText);
+  const result = Buffer.concat([decrypted, decipher.final()]);
+  const convert_string = result.toString();
+  return convert_string;
+};
+
+/**
  * Function - Generate
  * @description
  * Function to generate other functions
@@ -179,6 +202,7 @@ const generateFunctions = () => {
     Authenticate_User: Authenticate_User,
     NullishCoalesce: NullishCoalesce,
     GeneratSocketURL: GeneratSocketURL,
+    Decrypt_Room: Decrypt_Room,
   };
 };
 

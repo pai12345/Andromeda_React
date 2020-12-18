@@ -7,6 +7,7 @@ import React, {
   useState,
   ChangeEvent,
   SyntheticEvent,
+  MouseEvent,
 } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -19,8 +20,9 @@ import {
 } from "../../utility/Interface";
 import generatesocket from "../../service/socket";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import PageviewIcon from "@material-ui/icons/Pageview";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import Button from "@material-ui/core/Button";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const NoSsr = lazy(() => import("@material-ui/core/NoSsr"));
 const SendIcon = lazy(() => import("@material-ui/icons/Send"));
@@ -62,23 +64,11 @@ const XgChat = memo(() => {
   const { Screen, SocketOpen } = Chat_State;
   const [state_SocketOpen, setState_SocketOpen] = useState(SocketOpen);
 
-  const SocketOpen_Close = useCallback(
-    (data: any) => {
-      if (data === true) {
-        console.log(state_SocketOpen);
-        // if(state_SocketOpen === true){
-        // const socket = openSocket.io("http://localhost:4000", {transports: ['websocket']});
-        // socket.on("post", data1 => {
-        //   console.log(data);
-        // })
-        generatesocket().CustomerCare();
-        const newstate_SocketOpen = false;
-        setState_SocketOpen(newstate_SocketOpen);
-        // }
-      }
-    },
-    [state_SocketOpen]
-  );
+  const SocketOpen_Close = useCallback(() => {
+    generatesocket().CustomerCare();
+    const newstate_SocketOpen = false;
+    setState_SocketOpen(newstate_SocketOpen);
+  }, []);
 
   const _handle_SocketOpen = useCallback(
     (data: any) => {
@@ -332,7 +322,7 @@ const XiChatScreen = memo((props: any) => {
       newstate.push(newObj);
       setState_Chat_message("");
       setState_Chat_board(newstate);
-      SocketOpen_Close(true);
+      SocketOpen_Close();
     }
   }, [
     SocketOpen_Close,
@@ -427,19 +417,14 @@ const XiChatScreen = memo((props: any) => {
  */
 const XiAddChannel = memo(() => {
   const ChatChannel_State = generateState().ChatChannel_State;
-  const { Types } = ChatChannel_State;
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const check_icon = useCallback((evt: string) => {
-    switch (evt) {
-      case "Add Friends":
-        return <AddCircleIcon />;
-      case "Browse Channels":
-        return <PageviewIcon />;
-      case "Add Private Channel":
-        return <GroupAddIcon />;
-      default:
-        throw new Error("Unkown data for icon check");
-    }
+  const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  }, []);
+
+  const __handleClose = useCallback((evt) => {
+    setAnchorEl(null);
   }, []);
 
   return (
@@ -458,10 +443,38 @@ const XiAddChannel = memo(() => {
             justify="flex-start"
             alignItems="flex-start"
           >
-            {Types.map((data: string, index: number) => (
+            {ChatChannel_State.Types.map((data, index) => (
               <Fragment key={index}>
-                <Grid item xs={4} style={{ paddingRight: "20px" }}>
-                    {data}{check_icon(data)}
+                <Grid
+                  item
+                  xs={4}
+                  style={{ paddingLeft: "40px", paddingBottom: "30px" }}
+                >
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    variant="contained"
+                    onClick={handleClick}
+                    color="secondary"
+                  >
+                    {data.ButtonType}
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={(evt) => __handleClose(evt)}
+                  >
+                    {data.ButtonText.map((data_menu, index_menu) => (
+                      <MenuItem
+                        key={index_menu}
+                        onClick={(evt) => __handleClose(evt)}
+                      >
+                        {data_menu}
+                      </MenuItem>
+                    ))}
+                  </Menu>
                 </Grid>
               </Fragment>
             ))}

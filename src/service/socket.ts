@@ -13,13 +13,15 @@ const CustomerCare = () => {
     );
     const socket = io(GeneratSocketURL);
 
-    socket.on("connect", (data_test: Socket) => {
-      console.log(data_test);
-      socket.on("userjoined", (message: Socket) => {
-        console.log(message);
-      });
-
-      socket.emit("chatmessage", { payload: ["a", "b"] });
+    socket.on("connect", () => {
+      socket.emit(
+        "JoinRoom",
+        { user: "", message: "join room" },
+        (roomid: string) => {
+          const decrypt_key = generateFunctions().Decrypt_Room(roomid);
+          console.log(`Room joined:${decrypt_key}`);
+        }
+      );
     });
   } catch (error) {
     throw new Error(error);

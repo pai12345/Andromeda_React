@@ -288,7 +288,12 @@ const Chat_State = {
  * Provides details for Chat Channel
  */
 const ChatChannel_State = {
-  Types: ["Add Friends", "Browse Channels", "Add Private Channel"],
+  Types: [
+    {
+      ButtonType: "Friends",
+      ButtonText: ["Add Friends", "Add Groups", "Find Channels"],
+    },
+  ],
 };
 
 /**

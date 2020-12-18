@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { EnumAppBar, Endpoint_interface } from "./Interface";
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 //=============================Enum=====================================//
 /**
@@ -235,5 +235,5 @@ export const SignUp_ReducerFunction = (
  * Enumeration having API Endpoint details
  */
 export const Endpoint: Endpoint_interface = {
-  Login: process.env.REACT_APP_API,
+  Login: process.env.REACT_APP_GraphQL_API_Path,
 };
