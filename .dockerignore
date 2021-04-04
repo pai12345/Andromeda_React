@@ -1,7 +1,7 @@
-.vscode
-node_modules
-public
-src
+.vscode/
+node_modules/
+public/
+src/
 .env
 .gitignore
 Dockerfile
